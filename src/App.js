@@ -4,10 +4,12 @@ import Category from "./Category";
 import Search from "./Search";
 import Table from "./Table";
 
+
 class App extends React.Component {
   state = {
     noOfMovies: 0,
     searchString: "",
+    currGenre: "All Genre",
   };
 
   receiveMovieData = (number) => {
@@ -18,14 +20,16 @@ class App extends React.Component {
     this.setState({ searchString: param });
   };
 
+  receiveCurrGenre = (genre) => {
+    this.setState({ currGenre: genre });
+  };
+
   render() {
     return (
       <React.Fragment>
-        <Navbar />
-
         <div className="row">
           <div className="col-2 p-4">
-            <Category />
+            <Category receiveCurrGenre={this.receiveCurrGenre} />
           </div>
 
           <div className="col-10 p-4">
@@ -37,16 +41,19 @@ class App extends React.Component {
                 />
               </div>
             </div>
+
             <div className="row">
               <div className="col-8">
                 <Table
                   sendData={this.receiveMovieData}
                   searchString={this.state.searchString}
+                  currGenre={this.state.currGenre}
                 />
               </div>
             </div>
           </div>
         </div>
+      
       </React.Fragment>
     );
   }
